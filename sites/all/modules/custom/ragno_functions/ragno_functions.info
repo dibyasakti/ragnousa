@@ -1,0 +1,5 @@
+; $Id$
+name = Ragno Custom Functions
+description = "Provides custom function for Ragno sites."
+package = Ragno
+core = 6.x

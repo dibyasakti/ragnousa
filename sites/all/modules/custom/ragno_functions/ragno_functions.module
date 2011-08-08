@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * Implementation of hook_webform_select_options_info().
+ * See webform/webform_hooks.php for further information on this hook in the Webform API.
+ */
+function ragno_functions_webform_select_options_info() {
+    $items = array();
+    if (module_exists('autoassignrole')) {
+        $items['autoassign_role'] = array(
+            'title' => t('User Roles by Auto Assign role'),
+            'options callback' => 'ragno_functions_options_user_roles_autoassignrole'
+        );
+    }
+    return $items;
+}
+
+/**
+ * Build an options list for use by webforms based in roles enabled to by selected by users in registration
+ */
+function ragno_functions_options_user_roles_autoassignrole() {
+
+    $user_roles = user_roles(TRUE);
+    $autoassign_user_roles = _autoassignrole_get_settings('user_roles');
+
+    return array_intersect_key($user_roles, $autoassign_user_roles);
+}
+
+/**
+ * Implementation of hook_webform_component_info().
+ */
+function ragno_functions_webform_component_info() {
+    return array(
+        'password' => array(
+            'label' => t('Password'),
+            'description' => t('Basic Password textfield type.'),
+            'file' => 'components/password.inc',
+        )
+    );
+}
+
+function ragno_functions_views_pre_execute(&$view)
+{    
+    if($view->display[$view->current_display]->display_plugin == 'attachment'){
+        $view->pager['use_pager'] = 'mini';
+    }
+}
+
+?>

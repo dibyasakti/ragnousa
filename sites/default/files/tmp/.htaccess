@@ -1,0 +1,6 @@
+SetHandler Drupal_Security_Do_Not_Remove_See_SA_2006_006
+Options None
+Options +FollowSymLinks
+
+php_value upload_max_filesize 10M
+php_value post_max_size 10M

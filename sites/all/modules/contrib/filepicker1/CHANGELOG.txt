@@ -1,0 +1,43 @@
+
+File Picker for D6 in 6.x-1.x, 20011-02-27
+------------------------------------
+by hutch, changed InsertatCursor to filepickerInsertatCursor
+  in filepicker_iframe.js to avoid potential clashes with insert module
+
+File Picker for D6 in DRUPAL-6--1, 20011-02-17
+------------------------------------
+by hutch, reorganised functions for reduced footprint
+
+File Picker for D6 in DRUPAL-6--1, 20011-01-24
+------------------------------------
+by hutch, fixed rows per page bug
+
+File Picker for D6 in DRUPAL-6--1, 20011-01-06
+------------------------------------
+by hutch, fixed group by bug, #1015874
+
+File Picker for D6 in DRUPAL-6--1, 20010-12-21
+------------------------------------
+by hutch  added PECL uploadprogress support
+
+File Picker for D6 in DRUPAL-6--1, 20010-12-13
+------------------------------------
+by hutch  fixed upload progress
+
+File Picker for D6 in DRUPAL-6--1, 20010-12-05
+------------------------------------
+by hutch, fixed filesize, pathing in various places
+
+File Picker  for D6 in DRUPAL-6--1, 20010-12-04
+------------------------------------
+by hutch, fixed $form_state reference bug, 
+  preg_match bug in extension detection
+
+File Picker  for D6 in DRUPAL-6--1, 20010-12-03
+------------------------------------
+by hutch, removed colorbox_enable option
+
+File Picker  for D6 in DRUPAL-6--1, 20010-12-01
+------------------------------------
+by hutch, fixed imagepicker incompatibility
+

@@ -1,0 +1,11 @@
+name = Filepicker
+description = "Upload, browse and add links to files to your nodes."
+package = Other
+core = 6.x
+
+; Information added by drupal.org packaging script on 2011-03-01
+version = "6.x-1.1"
+core = "6.x"
+project = "filepicker"
+datestamp = "1299013868"
+

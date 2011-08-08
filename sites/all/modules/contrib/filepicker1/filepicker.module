@@ -1,0 +1,572 @@
+<?php
+
+/**
+ * @file
+ * Enables permitted roles to upload files for insertion into configured nodes.
+ */
+
+define('FILEPICKER_FILES_DIR', 'filepicker');
+define('FILEPICKER_ADMIN_PATH', 'admin/settings/filepicker');
+define('FILEPICKER_PATH', drupal_get_path('module', 'filepicker'));
+// Minimum PHP version for extension
+define('FILEPICKER_UPLOAD_STATUS_MIN_PHP', '5.2.1');
+define('FILEPICKER_UPLOAD_ID', 'UPLOAD_IDENTIFIER');
+
+/**
+ * Implementation of hook_help().
+ */
+function filepicker_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#filepicker':
+      $output = '<p>'. t('Adds an advanced file upload form under the node body part.') .'</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implementation of hook_perm().
+ */
+function filepicker_perm() {
+  return array('administer filepicker', 'use filepicker', 'access own filepicker', 'use public filepicker', 'create public filepicker groups');
+}
+
+/**
+ * Implementation of hook_init().
+ */
+function filepicker_init() {
+  global $user;
+  if ($user->uid > 0) {
+    module_load_include('inc', 'filepicker', 'filepicker.functions');
+    module_load_include('inc', 'filepicker', 'filepicker.theme');
+    module_load_include('inc', 'filepicker', 'filepicker.form-elements');
+  }
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+function filepicker_menu() {
+
+  $items = array();
+  $items['filepicker'] = array(
+    'title'            => 'File picker',
+    'page callback'    => 'filepicker_box',
+    'access callback'  => 'filepicker_access_use',
+    'type'             => MENU_CALLBACK,
+    'file'             => 'filepicker.upload.inc'
+  );
+  $items['filepicker/upload'] = array(
+    'title'            => 'Upload',
+    'access callback'  => 'filepicker_access_use',
+    'type'             => MENU_DEFAULT_LOCAL_TASK,
+    'weight'           => 0,
+  );
+  $items['filepicker/list'] = array(
+    'title'            => 'List',
+    'page callback'    => 'filepicker_box',
+    'access callback'  => 'filepicker_access_use',
+    'type'             => MENU_LOCAL_TASK,
+    'weight'           => 2,
+  );
+  $items['filepicker/list_public'] = array(
+    'title'            => 'List Public',
+    'page callback'    => 'filepicker_box',
+    'access callback'  => 'filepicker_access_use_public',
+    'type'             => MENU_LOCAL_TASK,
+    'weight'           => 3
+  );
+  $items['filepicker/groups'] = array(
+    'title'            => 'Groups',
+    'page callback'    => 'filepicker_box',
+    'access callback'  => 'filepicker_access_use_group',
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'filepicker.group.inc',
+    'weight'           => 4
+  );
+  $items['filepicker/list/%filepicker_id'] = array(
+    'title'            => 'List',
+    'page callback'    => 'filepicker_box',
+    'access callback'  => 'filepicker_access_use',
+    'type'             => MENU_LOCAL_TASK,
+    'weight'           => 2
+  );
+  $items['filepicker/edit/%filepicker_id'] = array(
+    'title'            => 'Edit file',
+    'page callback'    => 'filepicker_box',
+    'access callback'  => 'filepicker_access_use',
+    'type'             => MENU_CALLBACK,
+    'file'             => 'filepicker.edit.inc'
+  );
+  // uploadprogress callback
+  $items['filepicker/progress'] = array(
+    'page callback' => 'filepicker_uploadprogress_callback',
+    'access arguments' => array(TRUE),
+    'type' => MENU_CALLBACK,
+  );
+
+  // admin settings
+  $items[FILEPICKER_ADMIN_PATH] = array(
+    'title'            => 'Filepicker',
+    'description'      => 'Filepicker settings and administration.',
+    'page callback'    => 'filepicker_settings_page',
+    'access callback'  => 'filepicker_access_admin',
+    'type'             => MENU_NORMAL_ITEM,
+    'file'             => 'filepicker.admin.inc',
+    'weight'           => 0
+  );
+  $items[FILEPICKER_ADMIN_PATH .'/general'] = array(
+    'title'            => 'General',
+    'description'      => 'Filepicker settings.',
+    'access callback'  => 'filepicker_access_admin',
+    'page callback'    => 'drupal_get_form',
+    'page arguments'   => array('filepicker_settings_form'),
+    'type'             => MENU_DEFAULT_LOCAL_TASK,
+    'file'             => 'filepicker.admin.inc',
+    'weight'           => -10
+  );
+  // admin groups and files
+  $items[FILEPICKER_ADMIN_PATH .'/groups'] = array(
+    'title'            => 'Groups',
+    'description'      => 'Show user groups.',
+    'access callback'  => 'filepicker_access_admin_group',
+    'page callback'    => 'filepicker_admin_groups',
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'filepicker.admin.inc',
+    'weight'           => -8
+  );
+  $items[FILEPICKER_ADMIN_PATH .'/groups/users'] = array(
+    'title'            => 'Users',
+    'description'      => 'Show user groups.',
+    'access callback'  => 'filepicker_access_admin_group',
+    'page callback'    => 'filepicker_admin_groups',
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'filepicker.admin.inc',
+    'weight'           => -10
+  );
+  $items[FILEPICKER_ADMIN_PATH .'/groups/stats'] = array(
+    'title'            => 'Stats',
+    'description'      => 'Show user group stats.',
+    'access callback'  => 'filepicker_access_admin_group',
+    'page callback'    => 'filepicker_admin_groups',
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'filepicker.admin.inc',
+    'weight'           => -8
+  );
+  $items[FILEPICKER_ADMIN_PATH .'/groups/user/%filepicker_id'] = array(
+    'title'            => 'Groups',
+    'description'      => 'Show user groups.',
+    'access callback'  => 'filepicker_access_admin_group',
+    'page callback'    => 'filepicker_admin_groups',
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'filepicker.admin.inc',
+    'weight'           => -7
+  );
+  $items[FILEPICKER_ADMIN_PATH .'/groups/user/%filepicker_id/stats'] = array(
+    'title'            => 'Stats',
+    'description'      => 'Show user stats.',
+    'access callback'  => 'filepicker_access_admin_group',
+    'page callback'    => 'filepicker_admin_groups',
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'filepicker.admin.inc',
+    'weight'           => -8
+  );
+  $items[FILEPICKER_ADMIN_PATH .'/groups/autocomplete'] = array(
+    'access callback'  => 'filepicker_access_admin_group',
+    'page callback'    => 'filepicker_group_search_autocomplete',
+    'type'             => MENU_CALLBACK,
+    'file'             => 'filepicker.admin.inc'
+  );
+  $items[FILEPICKER_ADMIN_PATH .'/files/stats'] = array(
+    'title'            => 'Stats All',
+    'description'      => 'Show user statistics.',
+    'access callback'  => 'filepicker_access_admin_group',
+    'page callback'    => 'filepicker_admin_files',
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'filepicker.admin.inc',
+    'weight'           => -7
+  );
+  // admin filepicker
+  $items[FILEPICKER_ADMIN_PATH .'/files'] = array(
+    'title'            => 'Files',
+    'description'      => 'Show user files.',
+    'access callback'  => 'filepicker_access_admin',
+    'page callback'    => 'filepicker_admin_files',
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'filepicker.admin.inc',
+    'weight'           => -9
+  );
+  $items[FILEPICKER_ADMIN_PATH .'/files/list_all'] = array(
+    'title'            => 'List All',
+    'description'      => 'List user files.',
+    'access callback'  => 'filepicker_access_admin',
+    'page callback'    => 'filepicker_admin_files',
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'filepicker.admin.inc',
+    'weight'           => -8
+  );
+  $items[FILEPICKER_ADMIN_PATH .'/files/users'] = array(
+    'title'            => 'Users',
+    'description'      => 'List users.',
+    'access callback'  => 'filepicker_access_admin',
+    'page callback'    => 'filepicker_admin_files',
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'filepicker.admin.inc',
+    'weight'           => -10
+  );
+  $items[FILEPICKER_ADMIN_PATH .'/files/user/%filepicker_id/list'] = array(
+    'title'            => 'List',
+    'description'      => 'List user files.',
+    'access callback'  => 'filepicker_access_admin',
+    'page callback'    => 'filepicker_admin_files',
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'filepicker.admin.inc',
+    'weight'           => -3
+  );
+  $items[FILEPICKER_ADMIN_PATH .'/files/user/%filepicker_id/upload'] = array(
+    'title'            => 'Upload',
+    'description'      => 'Upload user files.',
+    'access callback'  => 'filepicker_access_admin',
+    'page callback'    => 'filepicker_admin_files',
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'filepicker.admin.inc',
+    'weight'           => -6
+  );
+  $items[FILEPICKER_ADMIN_PATH .'/files/user/%filepicker_id/stats'] = array(
+    'title'            => 'Stats',
+    'description'      => 'Show user stats.',
+    'access callback'  => 'filepicker_access_admin_group',
+    'page callback'    => 'filepicker_admin_files',
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'filepicker.admin.inc',
+    'weight'           => -2
+  );
+  $items[FILEPICKER_ADMIN_PATH .'/files/user/%filepicker_id/groups'] = array(
+    'title'            => 'Groups',
+    'description'      => 'List user groups.',
+    'access callback'  => 'filepicker_access_admin_group',
+    'page callback'    => 'filepicker_admin_files',
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'filepicker.admin.inc',
+    'weight'           => -1
+  );
+  $items[FILEPICKER_ADMIN_PATH .'/files/autocomplete'] = array(
+    'access callback'  => 'filepicker_access_admin',
+    'page callback'    => 'filepicker_user_autocomplete',
+    'type'             => MENU_CALLBACK,
+    'file'             => 'filepicker.admin.inc'
+  );
+  // Import
+  $items[FILEPICKER_ADMIN_PATH .'/import'] = array(
+    'title'            => 'Import',
+    'description'      => 'Manage bulk imports.',
+    'page callback'    => 'filepicker_admin_import',
+    'access callback'  => 'filepicker_access_import',
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'filepicker.admin.inc',
+    'weight'           => -8
+  );
+  $items[FILEPICKER_ADMIN_PATH .'/import/autocomplete'] = array(
+    'access callback'  => 'filepicker_access_import',
+    'page callback'    => 'filepicker_user_autocomplete',
+    'type'             => MENU_CALLBACK,
+    'file'             => 'filepicker.admin.inc'
+  );
+  $items[FILEPICKER_ADMIN_PATH .'/import/user/%filepicker_id'] = array(
+    'title'            => 'Import',
+    'description'      => 'Import files.',
+    'access callback'  => 'filepicker_access_import',
+    'page callback'    => 'filepicker_admin_import',
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'filepicker.admin.inc',
+    'weight'           => -3
+  );
+  // multitask
+  $items[FILEPICKER_ADMIN_PATH .'/multitask/%/%/%'] = array(
+    'title' => 'Bulk Operations',
+    'page callback' => 'filepicker_multitask',
+    'page arguments' => array(4, 5, 6),
+    'access callback'  => 'filepicker_access_admin',
+    'type' => MENU_CALLBACK,
+  );
+  // My filepicker
+  $items['user/%filepicker_uid/filepicker'] = array(
+    'title'            => 'My filepicker',
+    'description'      => 'Manage your filepicker files.',
+    'page callback'    => 'filepicker_user_page',
+    'page arguments'   => array(1),
+    'access callback'  => 'filepicker_access_user_pages',
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'filepicker.user.inc',
+    'weight'           => 0
+  );
+  $items['user/%filepicker_uid/filepicker/upload'] = array(
+    'title'            => 'Upload',
+    'description'      => 'Upload files.',
+    'page callback'    => 'filepicker_user_page',
+    'page arguments'   => array(1, 3),
+    'access callback'  => 'filepicker_access_user_pages',
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'filepicker.user.inc',
+    'weight'           => -9
+  );
+  $items['user/%filepicker_uid/filepicker/files/list'] = array(
+    'title'            => 'List',
+    'description'      => 'List your filepicker files.',
+    'page callback'    => 'filepicker_user_page',
+    'page arguments'   => array(1, 3, 4, 5),
+    'access callback'  => 'filepicker_access_user_pages',
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'filepicker.user.inc',
+    'weight'           => -6
+  );
+  // groups
+  $items['user/%filepicker_uid/filepicker/files/list_public'] = array(
+    'title'            => 'List Public',
+    'description'      => 'List public filepicker files.',
+    'page callback'    => 'filepicker_user_page',
+    'page arguments'   => array(1, 3, 4, 5),
+    'access callback'  => 'filepicker_access_user_public',
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'filepicker.user.inc',
+    'weight'           => -5
+  );
+  $items['user/%filepicker_uid/filepicker/groups/list'] = array(
+    'title'            => 'Groups',
+    'description'      => 'Manage your filepicker groups.',
+    'page callback'    => 'filepicker_user_page',
+    'page arguments'   => array(1, 3, 4, 5),
+    'access callback'  => 'filepicker_access_user_groups',
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'filepicker.user.inc',
+    'weight'           => -4
+  );
+  $items['user/%filepicker_uid/filepicker/stats'] = array(
+    'title'            => 'Stats',
+    'description'      => 'View your filepicker statistics.',
+    'page callback'    => 'filepicker_user_page',
+    'page arguments'   => array(1, 3),
+    'access callback'  => 'filepicker_access_user_groups',
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'filepicker.user.inc',
+    'weight'           => -3
+  );
+  $items['user/%filepicker_uid/filepicker/config'] = array(
+    'title'            => 'Config',
+    'description'      => 'Administer user configuration.',
+    'page callback'    => 'filepicker_user_page',
+    'page arguments'   => array(1, 3),
+    'access callback'  => 'filepicker_access_user_config',
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'filepicker.user.inc',
+    'weight'           => -2
+  );
+  // multitask
+  $items['user/%filepicker_uid/filepicker/multitask/%/%/%'] = array(
+    'title' => 'Bulk Operations',
+    'page callback' => 'filepicker_multitask',
+    'page arguments' => array(4, 5, 6),
+    'access callback'  => 'filepicker_access_user_pages',
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * menu placeholder functions
+ */
+function filepicker_id_load($arg) {
+  return (is_numeric($arg) ? $arg : FALSE);
+}
+
+function filepicker_uid_load($arg) {
+  global $user;
+  return ((is_numeric($arg) && $user->uid == $arg) ? $arg : FALSE);
+}
+
+/**
+ * Menu access callback functions.
+ */
+function filepicker_access_import() {
+  if (variable_get('filepicker_import_enabled', 0) && user_access('administer filepicker')) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+function filepicker_access_user_pages() {
+  if (variable_get('filepicker_account_enabled', 1) && user_access('access own filepicker') ) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+function filepicker_access_user_config() {
+  if (variable_get('filepicker_account_enabled', 1)
+      && user_access('access own filepicker')
+      && variable_get('filepicker_user_config_enable', 1)
+  ) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+function filepicker_access_user_groups() {
+  if (variable_get('filepicker_account_enabled', 1)
+      && user_access('access own filepicker')
+      && variable_get('filepicker_groups_enabled', 1)
+    ) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+function filepicker_access_user_public() {
+  if (variable_get('filepicker_account_enabled', 1)
+      && user_access('access own filepicker')
+      && variable_get('filepicker_groups_enabled', 1)
+      && user_access('use public filepicker')
+      && variable_get('filepicker_public_enabled', 1)
+    ) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+function filepicker_access_admin_group() {
+  if (variable_get('filepicker_groups_enabled', 1)
+      && user_access('administer filepicker')
+    ) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+function filepicker_access_admin() {
+  if (user_access('administer filepicker')) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+function filepicker_access_use() {
+  if (user_access('use filepicker')) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+function filepicker_access_use_public() {
+  if (user_access('use public filepicker') && variable_get('filepicker_public_enabled', 1)) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+function filepicker_access_use_group() {
+  if (user_access('use filepicker') && variable_get('filepicker_groups_enabled', 1)) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+/**
+ * Implementation of hook_form_alter().
+ */
+function filepicker_form_alter(&$form, &$form_state, $form_id) {
+  global $user;
+
+  $node_type = FALSE;
+  $comment = FALSE;
+  $block = FALSE;
+  $weight = 1;
+  if (isset($form['#node'])) {
+    $node = $form['#node'];
+    $node_types = node_get_types('names');
+    $node_type = in_array($node->type, variable_get('filepicker_node_types_enabled', array_keys($node_types)), TRUE);
+  }
+  elseif (module_exists('comment') && variable_get('filepicker_comment_enabled', 0) && preg_match('/comment_form$/i', $form_id) ) {
+    $comment = TRUE;
+    $weight = 1;
+  }
+  // blocks
+  elseif (( $form_id == 'block_add_block_form' || $form_id == 'block_admin_configure' ) && variable_get('filepicker_blocks_enabled', 0)) {
+    $block = TRUE;
+    $weight = 1;
+  }
+  if (user_access('use filepicker')) {
+    $width = variable_get('filepicker_advanced_iframe_width', "100%");
+    if ( isset($user->filepicker_advanced_iframe_width) && $user->filepicker_advanced_iframe_width ) {
+      $width = $user->filepicker_advanced_iframe_width;
+    }
+    if (! preg_match("/%$/", $width)) {
+      $width .= 'px';
+    }
+    $height = variable_get('filepicker_advanced_iframe_height', 500);
+    if (isset($user->filepicker_advanced_iframe_height) && $user->filepicker_advanced_iframe_height ) {
+      $height = $user->filepicker_advanced_iframe_height;
+    }
+    $border = variable_get('filepicker_advanced_iframe_border', "0");
+    if (isset($user->filepicker_advanced_iframe_border)) {
+      $border = $user->filepicker_advanced_iframe_border;
+    }
+
+    if (filepicker_get_colorbox_perms()) {
+      $iurl = l('Run filepicker', 'filepicker', array(
+        'query' => array('width' => $width, 'height' => $height, 'iframe' => 'true'),
+        'attributes' => array('class' => 'colorbox-load')
+      ));
+    }
+    else {
+      $iurl = '<iframe id="filepicker" style="width: '. $width .'; height: '. $height .'px; border: '. $border .';" src="'. url('filepicker') .'">Filepicker requires iframe support.</iframe>';
+    }
+
+    if (($node_type && preg_match('/node_form$/i', $form_id) ) || $comment ) {
+      $form['body_field']['body_filter']['filepicker_file_upload'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('File picker'),
+        '#collapsible' => 1,
+        '#collapsed' => variable_get('filepicker_advanced_collapsed', 0),
+        '#weight' => $weight,
+      );
+
+      $form['body_field']['body_filter']['#weight'] = 2;
+      $form['body_field']['body_filter']['filepicker_file_upload']['mpframe'] = array(
+        '#type' => 'markup',
+        '#value' => '<div id="filep_tb">'. $iurl .'</div>',
+      );
+      $form['body_field']['#prefix'] = '<a name="body_hash"></a>'. $form['body_field']['#prefix'];
+    }
+    elseif ($block) {
+      $form['block_settings']['filepicker_file_upload'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('File picker'),
+        '#collapsible' => TRUE,
+        '#collapsed' => (isset($user->filepicker_advanced_collapsed) ? $user->filepicker_advanced_collapsed : variable_get('filepicker_advanced_collapsed', 0)),
+        '#weight' => $weight,
+      );
+      $form['block_settings']['filepicker_file_upload']['mpframe'] = array(
+        '#type' => 'markup',
+        '#value' => '<div id="filep_tb">'. $iurl .'</div>',
+      );
+      $form['block_settings']['#prefix'] = '<a name="body_hash"></a>'. $form['block_settings']['#prefix'];
+    }
+  }
+}
+
+function filepicker_get_colorbox_perms() {
+  global $user;
+  if ((module_exists('colorbox')
+    && isset($user->filepicker_advanced_colorbox)
+    && $user->filepicker_advanced_colorbox
+    && variable_get('filepicker_advanced_colorbox', 0 )
+    && variable_get('colorbox_load', 0))
+      || (module_exists('colorbox')
+    && ! isset($user->filepicker_advanced_colorbox)
+    && variable_get('filepicker_advanced_colorbox', 0)
+    && variable_get('colorbox_load', 0))
+    ) {
+    return TRUE;
+  }
+  return FALSE;
+}

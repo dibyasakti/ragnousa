@@ -1,0 +1,32 @@
+body { background-color: #000; color: #FFF; font-family: Arial, Verdana; }
+
+tr.odd { background-color: #333; }
+tr.even { background-color: #666; }
+td.description { color: #FFF; }
+
+#site-name { display: block; overflow: hidden; text-decoration: none; text-indent: -9999px; height: 2px; }
+
+#primary ul { float: left;  color: #FFF; }
+#secondary ul { float: right;  color: #FFF; }
+
+#primary li, #secondary li { list-style: none; float: left; border-right: 3px solid; display: inline; padding: 2px 15px; }
+#primary li.first, #secondary li.first { border-left: 3px solid; }
+#primary li a.active, #secondary li a.active { color: #FF0; font-size: 14px; text-transform: uppercase; text-decoration: none; }
+#primary li a, #primary li a.visited, #secondary li a, #secondary li a.visited { color: #FFF; font-size: 14px; text-transform: uppercase; text-decoration: none; }
+
+.view-id-home_page_featured_blocks div { padding: 5px;  }
+.view-id-home_page_featured_blocks div.views-row { float: left; width: 400px; }
+.view-id-home_page_featured_blocks h2 { text-transform: uppercase; color: #FFF; }
+.view-id-home_page_featured_blocks h2 a { color: #FFF; text-decoration: none; }
+.view-id-home_page_featured_blocks div.node-submitted { display: none; }
+.view-id-home_page_featured_blocks div.node-content { border-top: 2px solid; }
+.view-id-home_page_featured_blocks div.node-content p { width: 160px; float: left; font-size: 14px; }
+.view-id-home_page_featured_blocks div.node-content div { width: 200px; float: left; margin: 0; padding: 0; }
+
+#content-top .view-item-list ul{
+  padding: 0;
+}
+
+.node-type-tile-series #container #content-wrapper .content-inner{
+  margin: 0;
+}

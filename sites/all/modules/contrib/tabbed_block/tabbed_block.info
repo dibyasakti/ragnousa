@@ -1,0 +1,11 @@
+; $Id: 
+name = Tabbed Block
+description = Provide tabbing blocks
+version = "6.x-dev"
+core = 6.x
+; Information added by drupal.org packaging script on 2010-07-04
+version = "6.x-1.0"
+core = "6.x"
+project = "tabbed_block"
+datestamp = "1278261306"
+

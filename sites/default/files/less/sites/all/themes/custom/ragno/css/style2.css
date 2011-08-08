@@ -1,0 +1,57 @@
+.section-environment .EnvironmentFeatured .view-content ul {
+  margin:0;
+  padding:0;
+}
+.section-environment .EnvironmentFeatured .view-content ul li.views-row {
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+.section-environment .EnvironmentFeatured .view-content ul li.views-row h2 { padding:5px 10px; }
+.section-environment .EnvironmentFeatured .view-content ul li.views-row a { display:block; }
+.section-environment .EnvironmentFeatured .view-content ul li.views-row a img { display:block; }
+.section-environment .EnvironmentFeaturedTop { margin-bottom:15px; }
+.section-environment .EnvironmentFeaturedTop h2 {
+  background:#803713;
+  text-align:left;
+  width:440px;
+}
+.section-environment .EnvironmentFeaturedTop a {
+  height:280px;
+  width:460px;
+}
+.section-environment .EnvironmentFeaturedBottom h2 { text-align:right; }
+.section-environment .EnvironmentFeaturedBottomLeft h2 {
+  background:#767932;
+  width:680px;
+}
+.section-environment .EnvironmentFeaturedBottomLeft a {
+  height:195px;
+  width:700px;
+}
+.section-environment .EnvironmentFeaturedBottomRight h2 {
+  background:#46887e;
+  width:200px;
+}
+.section-environment .EnvironmentFeaturedBottomRight a {
+  height:195px;
+  width:220px;
+}
+.section-professional #container #content-column #content-top .ProfessionalFeatured .view-content h2 {
+  padding:5px 10px;
+  text-align:right;
+}
+.section-professional #container #content-column #content-top .ProfessionalFeaturedTopLeft h2, .section-professional #container #content-column #content-top .ProfessionalFeaturedTopRight h2 {
+  background:#767932;
+  width:200px;
+}
+.section-professional #container #content-column #content-top .ProfessionalFeaturedTopCenter .view-content h2 {
+  background:#803713;
+  width:440px;
+}
+.section-professional #container #content-column #content-top .ProfessionalFeaturedTopCenter .view-content a {
+  display:block;
+  height:280px;
+  width:460px;
+}
+.section-who-ragno .HomeOwnerFeaturedTopRight .WhoRAGNOFeaturedTop h2 { background:#803713; }

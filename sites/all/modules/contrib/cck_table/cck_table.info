@@ -1,0 +1,16 @@
+; Convert from 5 to 6 by iStryker
+; sponser by www.themes247.com
+name = Table
+description = Defines a cck field type that outputs data in a table.
+dependencies[] = content
+package = CCK
+core = 6.x
+
+
+
+; Information added by drupal.org packaging script on 2011-02-25
+version = "6.x-1.x-dev"
+core = "6.x"
+project = "cck_table"
+datestamp = "1298618949"
+

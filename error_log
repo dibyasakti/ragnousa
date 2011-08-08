@@ -1,0 +1,52 @@
+[24-Feb-2011 12:09:20] PHP Fatal error:  Call to a member function options_validate() on a non-object in /home/marazziu/dev_html/sites/all/modules/contrib/views/includes/admin.inc on line 2365
+[25-Feb-2011 15:31:14] PHP Fatal error:  Call to undefined function isseet() in /home/marazziu/dev_html/sites/all/modules/contrib/views_customfield/includes/views_customfield_handler_field_phpcode.inc(118) : eval()'d code on line 3
+[28-Feb-2011 17:17:02] PHP Fatal error:  Call to undefined function  drupal_get_url_alias() in /home/marazziu/dev_html/sites/all/themes/custom/ragno/templates/node/node-tile_series.tpl.php on line 59
+[28-Feb-2011 17:17:09] PHP Fatal error:  Call to undefined function  drupal_get_url_alias() in /home/marazziu/dev_html/sites/all/themes/custom/ragno/templates/node/node-tile_series.tpl.php on line 59
+[28-Feb-2011 18:54:02] PHP Fatal error:  [] operator not supported for strings in /home/marazziu/dev_html/sites/all/themes/custom/ragno/template.php on line 100
+[01-Mar-2011 19:47:35] PHP Parse error:  syntax error, unexpected T_DOUBLE_ARROW in /home/marazziu/dev_html/sites/all/themes/custom/ragno/template.php on line 144
+[01-Mar-2011 19:50:06] PHP Fatal error:  Cannot redeclare theme_pager() (previously declared in /home/marazziu/dev_html/includes/pager.inc:115) in /home/marazziu/dev_html/sites/all/themes/custom/ragno/template.php on line 233
+[01-Mar-2011 19:50:55] PHP Fatal error:  Cannot redeclare theme_pager() (previously declared in /home/marazziu/dev_html/includes/pager.inc:115) in /home/marazziu/dev_html/sites/all/themes/custom/ragno/template.php on line 233
+[01-Mar-2011 20:05:17] PHP Warning:  Unterminated comment starting line 170 in /home/marazziu/dev_html/sites/all/themes/custom/ragno/template.php on line 170
+[01-Mar-2011 20:05:17] PHP Fatal error:  fatal flex scanner internal error--end of buffer missed in /home/marazziu/dev_html/sites/all/themes/custom/ragno/template.php on line 170
+[01-Mar-2011 21:19:56] PHP Fatal error:  Cannot redeclare theme_pager_next() (previously declared in /home/marazziu/dev_html/includes/pager.inc:310) in /home/marazziu/dev_html/sites/all/themes/custom/ragno/template.php on line 154
+[01-Mar-2011 21:20:06] PHP Fatal error:  Cannot redeclare theme_pager_next() (previously declared in /home/marazziu/dev_html/includes/pager.inc:310) in /home/marazziu/dev_html/sites/all/themes/custom/ragno/template.php on line 154
+[01-Mar-2011 21:20:14] PHP Fatal error:  Cannot redeclare theme_pager_next() (previously declared in /home/marazziu/dev_html/includes/pager.inc:310) in /home/marazziu/dev_html/sites/all/themes/custom/ragno/template.php on line 154
+[02-Mar-2011 16:41:14] PHP Fatal error:  Cannot redeclare theme_pager() (previously declared in /home/marazziu/dev_html/includes/pager.inc:115) in /home/marazziu/dev_html/sites/all/themes/custom/ragno/template.php on line 234
+[04-Mar-2011 15:58:19] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 18955264 bytes) in /home/marazziu/dev_html/includes/theme.inc on line 1067
+[04-Mar-2011 15:59:40] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 37909964 bytes) in /home/marazziu/dev_html/includes/bootstrap.inc on line 857
+[04-Mar-2011 16:01:26] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 37909976 bytes) in /home/marazziu/dev_html/includes/bootstrap.inc on line 857
+[04-Mar-2011 16:11:20] PHP Parse error:  syntax error, unexpected ')' in /home/marazziu/dev_html/sites/all/themes/custom/ragno/templates/views/views-view-fields--news-stories--page-1.tpl.php on line 27
+[04-Mar-2011 16:20:15] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 28079109 bytes) in /home/marazziu/dev_html/includes/common.inc on line 167
+[04-Mar-2011 16:37:43] PHP Fatal error:  Cannot use object of type stdClass as array in /home/marazziu/dev_html/sites/all/themes/custom/ragno/templates/views/views-view-fields--news-stories--page-1.tpl.php on line 25
+[04-Mar-2011 16:38:50] PHP Fatal error:  Cannot use object of type stdClass as array in /home/marazziu/dev_html/sites/all/themes/custom/ragno/templates/views/views-view-fields--news-stories--page-1.tpl.php on line 25
+[04-Mar-2011 16:38:58] PHP Fatal error:  Cannot use object of type stdClass as array in /home/marazziu/dev_html/sites/all/themes/custom/ragno/templates/views/views-view-fields--news-stories--page-1.tpl.php on line 25
+[04-Mar-2011 17:18:21] PHP Parse error:  syntax error, unexpected '{' in /home/marazziu/dev_html/sites/all/modules/contrib/webform_php/webform_php.module(64) : eval()'d code on line 5
+[04-Mar-2011 17:18:50] PHP Parse error:  syntax error, unexpected '{' in /home/marazziu/dev_html/sites/all/modules/contrib/webform_php/webform_php.module(64) : eval()'d code on line 5
+[04-Mar-2011 17:19:34] PHP Parse error:  syntax error, unexpected '{' in /home/marazziu/dev_html/sites/all/modules/contrib/webform_php/webform_php.module(64) : eval()'d code on line 5
+[06-Mar-2011 17:34:27] PHP Parse error:  syntax error, unexpected $end, expecting '(' in /home/marazziu/dev_html/sites/all/themes/custom/ragno/template.php on line 205
+[07-Mar-2011 11:33:03] PHP Parse error:  syntax error, unexpected T_OBJECT_OPERATOR in /home/marazziu/dev_html/sites/all/themes/custom/ragno/templates/node/node-tile_product.tpl.php on line 4
+[07-Mar-2011 11:33:51] PHP Parse error:  syntax error, unexpected T_OBJECT_OPERATOR in /home/marazziu/dev_html/sites/all/themes/custom/ragno/templates/node/node-tile_product.tpl.php on line 4
+[07-Mar-2011 11:35:33] PHP Parse error:  syntax error, unexpected '[' in /home/marazziu/dev_html/sites/all/themes/custom/ragno/templates/node/node-tile_product.tpl.php on line 4
+[07-Mar-2011 11:35:41] PHP Parse error:  syntax error, unexpected '[' in /home/marazziu/dev_html/sites/all/themes/custom/ragno/templates/node/node-tile_product.tpl.php on line 4
+[07-Mar-2011 11:35:51] PHP Parse error:  syntax error, unexpected '[' in /home/marazziu/dev_html/sites/all/themes/custom/ragno/templates/node/node-tile_product.tpl.php on line 4
+[07-Mar-2011 19:05:22] PHP Parse error:  syntax error, unexpected T_DOUBLE_ARROW in /home/marazziu/dev_html/sites/all/modules/contrib/webform_php/webform_php.module(81) : eval()'d code on line 4
+[08-Mar-2011 16:20:46] PHP Parse error:  syntax error, unexpected $end in /home/marazziu/dev_html/sites/all/themes/custom/ragno/template.php on line 151
+[09-Mar-2011 18:36:24] PHP Fatal error:  Call to a member function options_form() on a non-object in /home/marazziu/dev_html/sites/all/modules/contrib/views/includes/admin.inc on line 1912
+[09-Mar-2011 18:36:28] PHP Fatal error:  Call to a member function options_form() on a non-object in /home/marazziu/dev_html/sites/all/modules/contrib/views/includes/admin.inc on line 1912
+[09-Mar-2011 20:25:30] PHP Fatal error:  Cannot break/continue 1 level in /home/marazziu/dev_html/sites/all/themes/custom/ragno/template.php on line 324
+[09-Mar-2011 20:25:55] PHP Fatal error:  Cannot break/continue 1 level in /home/marazziu/dev_html/sites/all/themes/custom/ragno/template.php on line 324
+[09-Mar-2011 23:11:43] PHP Parse error:  syntax error, unexpected T_DOUBLE_ARROW in /home/marazziu/dev_html/sites/all/themes/custom/ragno/templates/views/views-view-fields--series-preview-products--default.tpl.php on line 1
+[11-Mar-2011 08:38:49] PHP Parse error:  syntax error, unexpected '<' in /home/marazziu/dev_html/sites/all/modules/contrib/custom_breadcrumbs/custom_breadcrumbs.module(725) : eval()'d code on line 1
+[11-Mar-2011 08:40:58] PHP Parse error:  syntax error, unexpected '<' in /home/marazziu/dev_html/sites/all/modules/contrib/custom_breadcrumbs/custom_breadcrumbs.module(725) : eval()'d code on line 1
+[11-Mar-2011 08:41:13] PHP Parse error:  syntax error, unexpected '<' in /home/marazziu/dev_html/sites/all/modules/contrib/custom_breadcrumbs/custom_breadcrumbs.module(725) : eval()'d code on line 1
+[11-Mar-2011 10:50:03] PHP Fatal error:  Call to undefined function strreplace() in /home/marazziu/dev_html/includes/common.inc(1696) : eval()'d code on line 3
+[11-Mar-2011 14:32:45] PHP Warning:  MySQL server has gone away
+query: INSERT INTO watchdog
+    (uid, type, message, variables, severity, link, location, referer, hostname, timestamp)
+    VALUES
+    (1, &#039;php&#039;, &#039;%message in %file on line %line.&#039;, &#039;a:4:{s:6:\&quot;%error\&quot;;s:12:\&quot;user warning\&quot;;s:8:\&quot;%message\&quot;;s:896:\&quot;MySQL server has gone away\nquery: UPDATE sessions SET uid = 1, cache = 0, hostname = &amp;#039;186.32.166.9&amp;#039;, session = &amp;#039;node_overview_filter|a:1:{i:0;a:2:{i:0;s:4:\\&amp;quot;type\\&amp;quot;;i:1;s:11:\\&amp;quot;tile_series\\&amp;quot;;}}user_overview_filter|a:0:{}dblog_overview_filter|a:0:{}views|a:1:{s:23:\\&amp;quot;directory_all_locations\\&amp;quot;;a:2:{s:7:\\&amp;quot;default\\&amp;quot;;a:1:{s:8:\\&amp;quot;distance\\&amp;quot;;a:3:{s:11:\\&amp;quot;postal_code\\&amp;quot;;s:6:\\&amp;quot;60102 \\&amp;quot;;s:15:\\&amp;quot;search_distance\\&amp;quot;;s:4:\\&amp;quot;1000\\&amp;quot;;s:12:\\&amp;quot;search_units\\&amp;quot;;s:4:\\&amp;quot;mile\\&am in /home/marazziu/dev_html/includes/database.mysqli.inc on line 135
+[01-Apr-2011 14:50:28] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 17049601 bytes) in /home/marazziu/dev_html/sites/all/modules/contrib/views/theme/views-view-grid.tpl.php on line 31
+[01-Apr-2011 14:50:50] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 17049601 bytes) in /home/marazziu/dev_html/sites/all/modules/contrib/views/theme/views-view-grid.tpl.php on line 31
+[01-Apr-2011 15:12:54] PHP Fatal error:  Cannot use object of type stdClass as array in /home/marazziu/dev_html/sites/all/themes/custom/ragno/templates/views/views-view-fields--tile-search--page.tpl.php on line 4
+[01-Apr-2011 15:13:09] PHP Fatal error:  Cannot use object of type content_handler_field_multiple as array in /home/marazziu/dev_html/sites/all/themes/custom/ragno/templates/views/views-view-fields--tile-search--page.tpl.php on line 4
+[01-Apr-2011 15:13:51] PHP Fatal error:  Cannot use object of type stdClass as array in /home/marazziu/dev_html/sites/all/themes/custom/ragno/templates/views/views-view-fields--tile-search--page.tpl.php on line 4
