@@ -160,7 +160,14 @@
 		});
 		
 		if( $('#fragment0-0')){
-		 $('#fragment0-0').trigger('click');
+		
+      var prevURl = $(location).attr('href');;
+      var substr = prevURl .split('#');
+      if(substr[substr.length - 1] == 'decorative-tile'){
+         $('#fragment0-1').trigger('click');
+      }else{
+         $('#fragment0-0').trigger('click');
+      }
 		}
 		
 		$('[id^=fragment]').each(function(){
