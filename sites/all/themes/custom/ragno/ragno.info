@@ -43,6 +43,9 @@
   stylesheets[all][] = css/960.css
   stylesheets[all][] = css/style.css.less
   stylesheets[all][] = css/style2.css.less
+  
+
+  stylesheets[all][] = css/jquery.iviewer.css
 
 ;----------// IE Conditional Stylesheets
 
@@ -64,6 +67,9 @@
 ;----------// Behaviours
 
   scripts[] = js/scripts.js
+
+  scripts[] = js/mousewheel.min.js
+  scripts[] = js/jquery.iviewer.js
 
   ; You can define new regions here.
 
