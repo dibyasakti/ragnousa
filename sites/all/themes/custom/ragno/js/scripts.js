@@ -226,6 +226,102 @@ $(document).ready(function(){
 	
 	}
 	
+	
+	/* 	
+	$('.grid_6').gzoom({
+			sW: 440,
+			sH: 386,
+			lW: 1240,
+			lH: 1000,
+			lighbox : false
+	});
+	 */	
+	var imgSrc = $('.imagecache').attr('src');
+	$(".grid_6").html('');
+	$(".grid_6").remove();
+	 /* $(".grid_6").iviewer(
+		{
+			src: imgSrc , 
+			update_on_resize: false,
+			zoom: 100,
+			initCallback: function ()
+			{
+			   var object = this;
+			   $("#in").click(function(){ object.zoom_by(1);}); 
+			   $("#out").click(function(){ object.zoom_by(-1);}); 
+			   $("#fit").click(function(){ object.fit();}); 
+			   $("#orig").click(function(){  object.set_zoom(100); }); 
+			   $("#update").click(function(){ object.update_container_info();});
+						console.log(this.img_object.display_width); //works*
+								 console.log(object.img_object.display_width); //getting undefined.*
+
+			},
+			
+
+			//                       onMouseMove: function(object, coords) { },
+			//                       onStartDrag: function(object, coords) { return false; }, //this image will not be dragged
+			//                       onDrag: function(object, coords) { }
+		});
+	$(".grid_6").attr('style','overflow:hidden')
+	$(".grid_6 img").attr('style','position:absolute; margin-left:320px;');	
+	$(".grid_6 img").addClass('imagecache');
+	$(".grid_6 img").addClass('imagecache-tile_product');
+	$(".grid_6 img").attr('width','440');
+	$(".grid_6 img").attr('height','386');
+	//	 $(".grid_6 img").addClass
+	//imagecache imagecache-tile_product width="440" height="386"
+	 */
+	 
+	
+                   $("#viewer").iviewer(
+                       {
+                       src: imgSrc, 
+                       update_on_resize: false,
+                       zoom: 98,
+                       initCallback: function ()
+                       {
+                           var object = this;
+                           $("#in").click(function(){ object.zoom_by(1);}); 
+                           $("#out").click(function(){ object.zoom_by(-1);}); 
+                           $("#fit").click(function(){ object.fit();}); 
+                           $("#orig").click(function(){  object.set_zoom(100); }); 
+                           $("#update").click(function(){ object.update_container_info();});
+						            //console.log(this.img_object.display_width); //works*
+									         //console.log(object.img_object.display_width); //getting undefined.*
+
+                       },
+                        onFinishLoad: function()
+                        {
+				$("#viewer").data('viewer').setCoords(-500,-500);
+                            //this.setCoords(-0, -500);
+                        }
+
+//                       onMouseMove: function(object, coords) { },
+//                       onStartDrag: function(object, coords) { return false; }, //this image will not be dragged
+//                       onDrag: function(object, coords) { }
+                  });
+
+
+                  var iviewer = {};
+                  $("#viewer2").iviewer(
+                  {
+                      src: "test_image2.jpg",
+                      initCallback: function()
+                      {
+                        iviewer = this;
+                      }
+                  });
+
+                  $("#chimg").click(function()
+                  {
+                    iviewer.loadImage("test_image.jpg");
+                    return false;
+                  });
+
+                  
+           
+	 
+	
 });
 
 
