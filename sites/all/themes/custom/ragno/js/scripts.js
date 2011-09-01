@@ -277,7 +277,7 @@ $(document).ready(function(){
                        {
                        src: imgSrc, 
                        update_on_resize: false,
-                       zoom: 98,
+                       zoom: 100,
                        initCallback: function ()
                        {
                            var object = this;
